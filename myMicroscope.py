@@ -21,7 +21,7 @@ class MicroscopeApp(App):
 
         self.camera = VideoView(device=0, zoom_level=3)
         self.camera.grid_into(
-            self.window, row=1, column=0, columnspan=6, rowspan=3, pady=5, padx=10, sticky="nswe"
+            self.window, row=1, column=0, columnspan=6, rowspan=4, pady=5, padx=10, sticky="nsew"
         )
         self.window.row_resize_weight(2, weight=1)
         self.window.column_resize_weight(5, weight=1)
@@ -86,8 +86,8 @@ class MicroscopeApp(App):
             self.controls, column=0, row=0, pady=5, padx=5, sticky="w"
         )
 
-        self.devices = TableView(columns_labels={"streams":"Available video streams"})
-        self.devices.grid_into(
+        self.stream_devices = TableView(columns_labels={"streams":"Available video streams"})
+        self.stream_devices.grid_into(
             self.window, column=6, row=2, pady=5, padx=5, sticky="nwe"
         )
 
@@ -129,13 +129,32 @@ class MicroscopeApp(App):
             self.save_box, column=3, row=3, pady=5, padx=0, sticky="e"
         )
 
+        self.device_box = Box(label="Devices info")
+        self.device_box.grid_into(
+            self.window, column=6, row=4, pady=5, padx=5, sticky="nwe"
+        )
+
+        self.sutter_label = Label("Sutter :")
+        self.sutter_label.grid_into(
+            self.device_box, column=0, row=0, padx=0, pady=5, sticky="w"
+        )
+
+        self.acq_label = Label("Acquisition frame rate :")
+        self.acq_label.grid_into(
+            self.device_box, column=0, row=1, padx=0, pady=5, sticky="w"
+        )
+        self.display_rate_label = Label("Display frame rate :")
+        self.display_rate_label.grid_into(
+            self.device_box, column=0, row=2, padx=0, pady=5, sticky="w"
+        )
+
         self.zoomlevel_label = Label("Zoom level:")
         self.zoomlevel_label.grid_into(
-            self.window, column=0, row=4, pady=5, padx=5, sticky="w"
+            self.window, column=0, row=5, pady=5, padx=5, sticky="w"
         )
         self.zoom_level_control = IntEntry(value=3, width=2, minimum=1)
         self.zoom_level_control.grid_into(
-            self.window, column=1, row=4, pady=5, padx=5, sticky="w"
+            self.window, column=1, row=5, pady=5, padx=5, sticky="w"
         )
         self.camera.bind_properties(
             "zoom_level", self.zoom_level_control, "value_variable"
