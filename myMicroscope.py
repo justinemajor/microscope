@@ -67,6 +67,7 @@ class MicroscopeApp(App):
             sticky="w",
         )
 
+        # TODO will make a box for the entire column so only the lef portion of the screen adjusts to resizing
         self.controls = Box(label="Image Source")
         # self.window.widget.grid_columnconfigure(1, weight=0)
 
@@ -96,6 +97,7 @@ class MicroscopeApp(App):
         self.stream_devices.data_source.append_record(
             {"streams":"camera"}
         )
+        # TODO make the tableview heught adjust itself automatically to number of rows
 
         self.save_box = Box(label="Save")
         self.save_box.grid_into(
