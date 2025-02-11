@@ -78,8 +78,9 @@ class MicroscopeApp(App):
 
         self.start_button = Button("Start")
         self.start_button.grid_into(
-            self.controls, column=1, row=0, pady=5, padx=5, sticky="e"
+            self.controls, column=2, row=0, pady=5, padx=5, sticky="e"
         )
+        self.controls.column_resize_weight(1, weight=1)
 
         self.configure_button = Button("Configure...")
         self.configure_button.grid_into(
@@ -90,6 +91,11 @@ class MicroscopeApp(App):
         self.stream_devices.grid_into(
             self.window, column=6, row=2, pady=5, padx=5, sticky="nwe"
         )
+        self.stream_devices.all_elements_are_editable = False
+        self.stream_devices.data_source.append_record(
+            {"streams":"bla1"}
+        )
+        # self.stream_devices.data_source.insert_record()
 
         self.save_box = Box(label="Save")
         self.save_box.grid_into(
@@ -110,7 +116,7 @@ class MicroscopeApp(App):
         )
         self.frames_from = PopupMenu(menu_items=["main"])
         self.frames_from.grid_into(
-            self.save_box, column=3, row=0, pady=5, padx=0, sticky="we"
+            self.save_box, column=3, row=0, pady=5, padx=5, sticky="we"
         )
         self.frames_from.selection_changed(0)
 
@@ -126,12 +132,12 @@ class MicroscopeApp(App):
 
         self.save_button = Button(label="Save as...")
         self.save_button.grid_into(
-            self.save_box, column=3, row=3, pady=5, padx=0, sticky="e"
+            self.save_box, column=3, row=3, pady=5, padx=5, sticky="e"
         )
 
         self.device_box = Box(label="Devices info")
         self.device_box.grid_into(
-            self.window, column=6, row=4, pady=5, padx=5, sticky="nwe"
+            self.window, column=6, row=4, pady=5, rowspan=2, padx=5, sticky="nwe"
         )
 
         self.sutter_label = Label("Sutter :")
@@ -150,11 +156,11 @@ class MicroscopeApp(App):
 
         self.zoomlevel_label = Label("Zoom level:")
         self.zoomlevel_label.grid_into(
-            self.window, column=0, row=5, pady=5, padx=5, sticky="w"
+            self.window, column=0, row=5, pady=5, padx=5, sticky="nw"
         )
         self.zoom_level_control = IntEntry(value=3, width=2, minimum=1)
         self.zoom_level_control.grid_into(
-            self.window, column=1, row=5, pady=5, padx=5, sticky="w"
+            self.window, column=1, row=5, pady=5, padx=5, sticky="nw"
         )
         self.camera.bind_properties(
             "zoom_level", self.zoom_level_control, "value_variable"
