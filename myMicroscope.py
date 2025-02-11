@@ -21,75 +21,74 @@ class MicroscopeApp(App):
 
         self.camera = VideoView(device=0, zoom_level=3)
         self.camera.grid_into(
-            self.window, row=0, column=0, pady=10, padx=10, sticky="nw"
+            self.window, row=1, column=0, columnspan=6, pady=5, padx=10, sticky="nw"
+        )
+
+        self.video_view_label = Label("Display : ")
+        self.video_view_label.grid_into(
+            self.window, row=0, column=0, pady=5, padx=0, sticky="w"
+        )
+
+        color_all, color_red, color_blue, color_green = RadioButton.linked_group(
+            labels_values={"all": 0, "red": 1, "blue":2, "green":3}
+        )
+        color_all.grid_into(
+            self.window,
+            column=1,
+            row=0,
+            pady=5,
+            padx=5,
+            sticky="w",
+        )
+        color_red.grid_into(
+            self.window,
+            column=2,
+            row=0,
+            pady=5,
+            padx=5,
+            sticky="w",
+        )
+        color_blue.grid_into(
+            self.window,
+            column=3,
+            row=0,
+            pady=5,
+            padx=5,
+            sticky="w",
+        )
+        color_green.grid_into(
+            self.window,
+            column=4,
+            row=0,
+            pady=5,
+            padx=5,
+            sticky="w",
         )
 
         self.controls = Box(label="Controls", width=500, height=700)
         self.window.widget.grid_columnconfigure(1, weight=0)
 
         self.controls.grid_into(
-            self.window, column=1, row=0, pady=10, padx=10, sticky="nsew"
+            self.window, column=6, row=1, pady=0, padx=5, sticky="nsew"
         )
         self.controls.widget.grid_rowconfigure(0, weight=0)
         self.controls.widget.grid_rowconfigure(1, weight=0)
 
-        self.start_button, self.save_button, self.stream_button = (
-            self.camera.create_behaviour_buttons()
-        )
-
+        self.start_button = Button("Start")
         self.start_button.grid_into(
-            self.controls, column=0, row=0, pady=5, padx=10, sticky="w"
-        )
-        self.save_button.grid_into(
-            self.controls, column=1, row=0, pady=5, padx=10, sticky="w"
-        )
-        self.stream_button.grid_into(
-            self.controls, column=1, row=1, pady=5, padx=10, sticky="w"
-        )
-
-        self.exposure_time_label = Label("Exposure:")
-        self.exposure_time_label.grid_into(
-            self.controls, column=0, row=3, pady=5, padx=5, sticky="e"
-        )
-        self.exposure_time_slider = Slider()
-        self.exposure_time_slider.grid_into(
-            self.controls, column=1, row=3, pady=5, padx=10, sticky="nw"
-        )
-
-        self.gain_label = Label("Gain:")
-        self.gain_label.grid_into(
-            self.controls, column=0, row=4, pady=5, padx=5, sticky="e"
-        )
-        self.gain_slider = Slider()
-        self.gain_slider.grid_into(
-            self.controls, column=1, row=4, pady=5, padx=10, sticky="nw"
-        )
-
-        self.popup_label = Label("Camera:")
-        self.popup_label.grid_into(
-            self.controls, column=0, row=2, pady=5, padx=10, sticky="e"
+            self.controls, column=0, row=0, pady=5, padx=5, sticky="w"
         )
 
         self.zoomlevel_label = Label("Zoom level:")
         self.zoomlevel_label.grid_into(
-            self.controls, column=0, row=6, pady=5, padx=10, sticky="e"
+            self.window, column=0, row=2, pady=5, padx=5, sticky="w"
         )
         self.zoom_level_control = IntEntry(value=3, width=5, minimum=1)
         self.zoom_level_control.grid_into(
-            self.controls, column=1, row=6, pady=5, padx=10, sticky="w"
+            self.window, column=1, row=2, pady=5, padx=5, sticky="w"
         )
         self.camera.bind_properties(
             "zoom_level", self.zoom_level_control, "value_variable"
-        )
-
-        self.camera.histogram_xyplot = Histogram(figsize=(3.5, 1))
-        self.camera.histogram_xyplot.grid_into(
-            self.controls, column=0, columnspan=2, row=7, pady=5, padx=10, sticky="w"
-        )
-
-        self.popup_camera = self.camera.create_behaviour_popups()
-        self.popup_camera.grid_into(
-            self.controls, column=1, row=2, pady=5, padx=10, sticky="w"
         )
 
     def about(self):
