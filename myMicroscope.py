@@ -19,7 +19,7 @@ class MicroscopeApp(App):
 
         self.window.widget.title("Microscope")
 
-        self.camera = VideoView(device=0, zoom_level=3)
+        self.camera = VideoView(device=0, zoom_level=2)
         self.camera.grid_into(
             self.window, row=1, column=0, columnspan=6, rowspan=4, pady=5, padx=10, sticky="nsew"
         )
@@ -86,16 +86,16 @@ class MicroscopeApp(App):
         self.configure_button.grid_into(
             self.controls, column=0, row=0, pady=5, padx=5, sticky="w"
         )
-
+        
         self.stream_devices = TableView(columns_labels={"streams":"Available video streams"})
         self.stream_devices.grid_into(
-            self.window, column=6, row=2, pady=5, padx=5, sticky="nwe"
+            self.window, column=6, row=2, pady=5, padx=5, sticky="new"
         )
+
         self.stream_devices.all_elements_are_editable = False
         self.stream_devices.data_source.append_record(
-            {"streams":"bla1"}
+            {"streams":"camera"}
         )
-        # self.stream_devices.data_source.insert_record()
 
         self.save_box = Box(label="Save")
         self.save_box.grid_into(
@@ -158,7 +158,7 @@ class MicroscopeApp(App):
         self.zoomlevel_label.grid_into(
             self.window, column=0, row=5, pady=5, padx=5, sticky="nw"
         )
-        self.zoom_level_control = IntEntry(value=3, width=2, minimum=1)
+        self.zoom_level_control = IntEntry(value=2, width=2, minimum=1, maximum=4)
         self.zoom_level_control.grid_into(
             self.window, column=1, row=5, pady=5, padx=5, sticky="nw"
         )
