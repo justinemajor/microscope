@@ -21,10 +21,10 @@ class MicroscopeApp(App):
 
         self.camera = VideoView(device=0, zoom_level=3)
         self.camera.grid_into(
-            self.window, row=1, column=0, columnspan=6, pady=5, padx=10, sticky="nw"
+            self.window, row=1, column=0, columnspan=6, rowspan=2, pady=5, padx=10, sticky="nw"
         )
 
-        self.video_view_label = Label("Display : ")
+        self.video_view_label = Label("Display :")
         self.video_view_label.grid_into(
             self.window, row=0, column=0, pady=5, padx=0, sticky="w"
         )
@@ -65,7 +65,7 @@ class MicroscopeApp(App):
             sticky="w",
         )
 
-        self.controls = Box(label="Controls", width=500, height=700)
+        self.controls = Box(label="Image Source", width=500, height=500)
         self.window.widget.grid_columnconfigure(1, weight=0)
 
         self.controls.grid_into(
@@ -76,16 +76,26 @@ class MicroscopeApp(App):
 
         self.start_button = Button("Start")
         self.start_button.grid_into(
+            self.controls, column=1, row=0, pady=5, padx=5, sticky="w"
+        )
+
+        self.configure_button = Button("Configure...")
+        self.configure_button.grid_into(
             self.controls, column=0, row=0, pady=5, padx=5, sticky="w"
+        )
+
+        self.devices = TableView(columns_labels={"streams":"Available video streams"})
+        self.devices.grid_into(
+            self.window, column=6, row=2, pady=10, padx=5, sticky="nwe"
         )
 
         self.zoomlevel_label = Label("Zoom level:")
         self.zoomlevel_label.grid_into(
-            self.window, column=0, row=2, pady=5, padx=5, sticky="w"
+            self.window, column=0, row=3, pady=5, padx=5, sticky="w"
         )
         self.zoom_level_control = IntEntry(value=3, width=5, minimum=1)
         self.zoom_level_control.grid_into(
-            self.window, column=1, row=2, pady=5, padx=5, sticky="w"
+            self.window, column=1, row=3, pady=5, padx=5, sticky="w"
         )
         self.camera.bind_properties(
             "zoom_level", self.zoom_level_control, "value_variable"
